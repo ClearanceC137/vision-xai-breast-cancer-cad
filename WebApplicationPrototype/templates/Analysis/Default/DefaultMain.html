@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CAD System</title>
+    <link rel="stylesheet" href="../../static/css/style.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #000000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid red;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            color: red;
+            margin: 0;
+        }
+
+        nav a {
+            color: red;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            padding: 6rem 2rem 2rem;
+        }
+
+        footer {
+            background-color: #1e1e1e;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            width: 100%;
+            height: 30px;
+        }
+
+        h1, h2 {
+            color: red;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 5px 5px 20px 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-top: 1rem;
+        }
+
+        form {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        form label {
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #2a2a2a;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        .upload-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 150px;
+            align-self: center;
+        }
+
+        .upload-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Visual-Based Computer-Aided Breast Cancer Diagnosis</h1>
+            <nav>
+                <a href="../../Home/Landing.html">Home</a>
+                <a href="../../Case/AddCase.html">New Case</a>
+                <a href="../../Case/History.html">History</a>
+                <a href="../../Authentication/Login.html">Logout</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Single Image Upload -->
+            <div class="container">
+                <h2>Image</h2>
+                <form action="/upload-single" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="image1">Image File (1)</label>
+                        <input type="file" name="image1" id="image1" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="body_part1">Body Part</label>
+                        <select name="body_part1" id="body_part1" required>
+                            <option value="">-- Select Body Part --</option>
+                            <option value="left_breast">Left Breast</option>
+                            <option value="right_breast">Right Breast</option>
+                            <option value="abdomen">Abdomen</option>
+                            <option value="chest">Chest</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modality1">Modality</label>
+                        <select name="modality1" id="modality1">
+                            <option value="">-- Select Image Modality --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="upload-btn">Start Diagnosis</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Bulk Upload -->
+            <div class="container">
+                <h2 style="margin-top: 2rem;">Bulk Upload (Multiple Images)</h2>
+                <form action="/upload-bulk" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="bulk_images_zip">Select ZIP File</label>
+                        <input type="file" name="bulk_images_zip" id="bulk_images_zip" accept=".zip" required />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="upload-btn">Start Bulk Diagnosis</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Embedding Visual.html -->
+            <iframe src="/sample" width="100%" height="1300" style="border: none; margin-top: 20px;"></iframe>
+
+        </main>
+
+        <footer>
+            &copy; 2025 Visual CAD System
+        </footer>
+    </div>
+
+    <script>
+        const modalityOptions = {
+            left_breast: ['Mammogram', 'Ultrasound', 'MRI'],
+            right_breast: ['Mammogram', 'Ultrasound', 'MRI'],
+            abdomen: ['Ultrasound', 'MRI'],
+            chest: ['X-ray', 'CT scan', 'MRI']
+        };
+
+        const bodyPartSelect = document.getElementById('body_part1');
+        const modalitySelect = document.getElementById('modality1');
+
+        bodyPartSelect.addEventListener('change', () => {
+            const selected = bodyPartSelect.value;
+            modalitySelect.innerHTML = '<option value="">-- Select Image Modality --</option>';
+
+            if (modalityOptions[selected]) {
+                modalityOptions[selected].forEach(modality => {
+                    const option = document.createElement('option');
+                    option.value = modality.toLowerCase().replace(/\s+/g, '_');
+                    option.textContent = modality;
+                    modalitySelect.appendChild(option);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

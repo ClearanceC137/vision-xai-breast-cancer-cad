@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAD Classification Results</title>
+  <link rel="stylesheet" href="../../static/css/style.css" />
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: red;
+      margin-bottom: 1rem;
+    }
+
+  .container {
+      display: flex;
+      flex-direction: column; /* stack items vertically */
+      align-items: center;     /* center items horizontally */
+      gap: 1rem;
+      width: 100%;
+      max-width: 1000px;
+  }
+
+
+    .image-container {
+      position: relative;
+      flex: 1 1 400px;
+      max-width: 600px;
+      height: 400px;
+    }
+
+    #imageDisplay {
+      width: 100%;
+      height: auto;
+      border: 2px solid red;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* ROI Highlight Box */
+    .roi-box {
+      position: absolute;
+      border: 3px solid #ff0000cc;
+      border-radius: 6px;
+      pointer-events: none;
+      /* example coords */
+      top: 20%;
+      left: 30%;
+      width: 40%;
+      height: 35%;
+      box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .results {
+      flex: 1 1 300px;
+      background-color: #2c2c2c;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px 1px #ff0000aa;
+      min-width: 280px;
+    }
+
+    .results h2 {
+      color: #ff4c4c;
+      margin-top: 0;
+    }
+
+    .metrics {
+      margin-top: 5px;
+      background-color: #2a2a2a;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px red;
+    }
+
+    .metrics div {
+      margin: 0.5rem 0;
+    }
+
+    .metrics label {
+      font-weight: bold;
+      margin-right: 0.5rem;
+      color: #ff6666;
+    }
+
+
+    .back-button {
+      margin-top: 2rem;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      align-self: center;
+    }
+
+    .back-button:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <h1>Region of Interest  - Case C001</h1>
+
+  <div class="container">
+    <div class="image-container">
+        <img id="imageDisplay" src="../../static/Images/BreastScan1.jpg" alt="Medical Image with ROI" style="width: 100%;height:100%;"/>
+        <div class="roi-box" id="roiBox">ROI</div>
+
+  </div>
+  <div class="metrics">
+    <div><label>Image Name :</label><span>sample-mammo1.jpg</span></div>
+    <div><label>Body Part :</label><span>Left Breast</span></div>
+    <div><label>Modality :</label><span>MRI</span></div>
+  </div>
+  <button class="back-button" onclick="closeTab()">Close</button>
+
+  <script>
+    // Example: dynamically update classification results and ROI
+
+    // Simulated data (you can fetch these values from your AI model/API)
+    const classificationData = {
+            accuracy: "95.7%",
+            confidence: 0.92,
+            diagnosis: "Benign",
+            roiCoords: { top: 0.20, left: 0.30, width: 0.40, height: 0.35 }, // relative to image size (0-1)
+    };
+
+    function closeTab() {
+      window.close();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add New Case - MammoCAD</title>
+  <link rel="stylesheet" href="../../static/css/style.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-section {
+      background-color: #1b1b1b;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+
+    .form-section h2 {
+      margin-bottom: 1.5rem;
+      color: red;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 4px;
+      border: none;
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    .save-btn {
+      margin-top: 1.5rem;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .save-btn:hover {
+      background-color: darkred;
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        border-top: 1px solid #444;
+        margin-top: 3rem;
+        color: #888;
+        position: absolute;
+        bottom: 0;
+        width:98%;
+        height: 30px;
+    }
+        .save-btn {
+            display: block;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            width: 100%;
+            font-weight: bold;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background-color: darkred;
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Visual-Based Computer-Aided Breast Cancer Diagnosis</h1>
+    <nav>
+      <a href="../Home/Landing.html">Home</a>
+      <a href="AddCase.html">New Case</a>
+      <a href="History.html">History</a>
+      <a href="../../Authentication/Login.html">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="form-section">
+      <form action="#" method="POST">
+        <div class="form-group">
+          <label for="diagnosis-date">Case Date</label>
+          <input type="date" id="diagnosis-date" name="diagnosis_date" required />
+        </div>
+        <div class="form-group">
+          <label for="patient-id">Patient ID</label>
+          <input type="text" id="patient-id" name="patient_id" required />
+        </div>
+        <div class="form-group">
+          <label for="patient-name">Patient Name</label>
+          <input type="text" id="patient-name" name="patient_name" required />
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+        </div>
+        <div class="form-group">
+          <label for="case-id">Case ID</label>
+          <input type="text" id="case-id" name="case_id" required />
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="Under Review">Under Review</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cleared">Cleared</option>
+          </select>
+        </div>
+        
+        <!--
+        <button type="submit" class="save-btn">Save Case</button>
+        -->
+      </form>
+      <a href="../Analysis/Diagnosis.html" class="save-btn">Save Case</a>
+    </div>
+  </main>
+    <!--
+    <footer>
+        <p>&copy; 2025 MammoCAD Diagnostic System</p>
+    </footer>
+    -->
+</body>
+</html>

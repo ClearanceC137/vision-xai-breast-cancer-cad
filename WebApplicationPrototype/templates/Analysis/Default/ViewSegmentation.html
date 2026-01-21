@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View Segmentation Masks</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 2rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #ff0000;
+      margin-bottom: 1rem;
+    }
+    .metrics {
+      width: 100%;
+      max-width: 900px;
+      background: #2a2a2a;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-sizing: border-box;
+      box-shadow: 0 0 12px #ff0000aa;
+    }
+    .metrics div {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .metrics label {
+      color: #ff6666;
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+    .image-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .image-column {
+      text-align: center;
+    }
+    .image-column img {
+      width: 300px;
+      height: auto;
+      border: 2px solid red;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .image-label {
+      color: #ff6666;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+    .mask-grid {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .mask-grid img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #fa7070;
+      border-radius: 6px;
+      box-shadow: 0 0 8px #ee4f4fbb;
+      object-fit: contain;
+      background: #111;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .mask-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff4444;
+    }
+    .back-button {
+      margin-top: 2rem;
+      background: #ff0000;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      align-self: center;
+    }
+    .back-button:hover {
+      background: #cc0000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Image Segmentation</h1>
+
+  <div class="metrics" role="region" aria-label="Image Metadata" style="margin-bottom:20px;">
+    <div><label>Image Name:</label> <span>{{ metadata.image_name }}</span></div>
+    <div><label>Body Part:</label> <span>{{ metadata.body_part }}</span></div>
+    <div><label>Modality:</label> <span>{{ metadata.modality }}</span></div>
+  </div>
+
+  <!-- Row for Raw and Cleaned Images -->
+  <div class="image-row">
+    <div class="image-column">
+      <img src="{{ url_for('static', filename='original_image/raw_image.png') }}" alt="Raw Image"/>
+      <div class="image-label">Raw Image</div>
+    </div>
+    <div class="image-column">
+      <img src="{{ url_for('static', filename='clean_image/clean_image.png') }}" alt="Cleaned Image"/>
+      <div class="image-label">Suppress Artifacts + Pectoral Muscle Removal</div>
+    </div>
+  </div>
+
+  <h1>Segmentation Masks</h1>
+  <div class="mask-grid" role="list" aria-label="Segmentation mask images">
+    {% for mask in masks %}
+      <img src="{{ url_for('static', filename='segmentation_image/' ~ mask) }}" alt="Segmentation mask {{ loop.index }}" role="listitem" tabindex="0" />
+    {% endfor %}
+  </div>
+
+  <button class="back-button" onclick="window.close()" aria-label="Close window">Close</button>
+  <script>
+    const masks = {{ masks|tojson }};
+    console.log('Masks array:', masks);
+  </script>
+</body>
+</html>

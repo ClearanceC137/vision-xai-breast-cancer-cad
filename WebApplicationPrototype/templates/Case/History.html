@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - CAD System</title>
+  <link rel="stylesheet" href="../../static/css/style.css" />
+  <style>
+    main {
+      padding: 2rem;
+    }
+
+    h2 {
+      color: red;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    th, td {
+      border: 1px solid #333;
+      padding: 0.75rem;
+      text-align: left;
+      color: #fff;
+    }
+
+    th {
+      background-color: #222;
+    }
+
+    tr:nth-child(even) {
+      background-color: #1a1a1a;
+    }
+
+    .add-case-btn {
+      background-color: red;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .add-case-btn:hover {
+      background-color: darkred;
+    }
+
+    .clickable-row {
+      cursor: pointer;
+    }
+
+    .clickable-row:hover {
+      background-color: #1f1f1f;
+    }
+
+    /* Filter input styling */
+    #filter-container {
+      margin-bottom: 1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #filter-field, #filter-input {
+      padding: 0.3rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #444;
+      background-color: #222;
+      color: white;
+    }
+    footer {
+        background-color: #1e1e1e;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Visual-Based Computer-Aided Breast Cancer Diagnosis</h1>
+  <nav>
+    <a href="../Home/Landing.html">Home</a>
+    <a href="../Case/AddCase.html">New Case</a>
+    <a href="../Case/History.html">History</a>
+    <a href="../Authentication/Login.html">Logout</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Case History</h2>
+
+  <div id="filter-container">
+    <label for="filter-field">Filter:</label>
+    <select id="filter-field">
+      <option value="0">Patient ID</option>
+      <option value="1">Name</option>
+      <option value="2">Date of Birth</option>
+      <option value="3">Case ID</option>
+      <option value="4">Diagnosis Date</option>
+      <option value="5">Status</option>
+    </select>
+
+    <input
+      type="text"
+      id="filter-input"
+      placeholder="Type to filter..."
+      autocomplete="off"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Patient ID</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Case ID</th>
+        <th>Diagnosis Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="clickable-row" data-href="../Analysis/Diagnosis.html">
+        <td>1001</td>
+        <td>Jane Doe</td>
+        <td>1985-03-15</td>
+        <td>C001</td>
+        <td>2025-04-01</td>
+        <td>Under Review</td>
+      </tr>
+      <tr class="clickable-row" data-href="../Analysis/Diagnosis.html">
+        <td>1002</td>
+        <td>Mary Johnson</td>
+        <td>1979-11-22</td>
+        <td>C002</td>
+        <td>2025-04-12</td>
+        <td>Confirmed Benign</td>
+      </tr>
+      <tr class="clickable-row" data-href="../Analysis/Diagnosis.html">
+        <td>1003</td>
+        <td>Lisa Smith</td>
+        <td>1990-07-30</td>
+        <td>C003</td>
+        <td>2025-04-15</td>
+        <td>Malignant</td>
+      </tr>
+      <tr class="clickable-row" data-href="../Analysis/Diagnosis.html?case=C004">
+        <td>1004</td>
+        <td>Emily Brown</td>
+        <td>1968-01-10</td>
+        <td>C004</td>
+        <td>2025-04-18</td>
+        <td>Under Review</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="../Case/AddCase.html" class="add-case-btn">Add New Case</a>
+</main>
+
+<footer>
+  <p>&copy; 2025 CAD Diagnostic System</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Make table rows clickable
+    const rows = document.querySelectorAll('.clickable-row');
+    rows.forEach(row => {
+      row.addEventListener('click', () => {
+        const href = row.getAttribute('data-href');
+        if (href) {
+          window.location.href = href;
+        }
+      });
+    });
+
+    // Filtering functionality
+    const filterField = document.getElementById('filter-field');
+    const filterInput = document.getElementById('filter-input');
+    const tableBody = document.querySelector('table tbody');
+
+    filterInput.addEventListener('input', function () {
+      const filterColumn = parseInt(filterField.value);
+      const filterText = this.value.toLowerCase();
+
+      for (const row of tableBody.rows) {
+        const cellText = row.cells[filterColumn].textContent.toLowerCase();
+        if (cellText.indexOf(filterText) > -1) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+
+    filterField.addEventListener('change', () => {
+      filterInput.value = '';
+      for (const row of tableBody.rows) {
+        row.style.display = '';
+      }
+    });
+  });
+</script>
+</body>
+</html>

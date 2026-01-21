@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Region of Interest - CAD System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: red;
+      margin-bottom: 1rem;
+      margin-top: 10%  ;
+    }
+
+    img {
+      width: auto;
+      height: auto;           /* Maintain aspect ratio */
+      max-height: 80vh;       /* Optional: limit max height to viewport */
+      border: 2px solid red;
+      border-radius: 8px;
+      object-fit: contain;    /* Ensures proper scaling inside box */
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      background-color: darkred;
+    }
+
+    .metrics {
+      margin-top: 1rem;
+      background-color: #2a2a2a;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px red;
+    }
+
+    .metrics div {
+      margin: 0.5rem 0;
+    }
+
+    .metrics label {
+      font-weight: bold;
+      margin-right: 0.5rem;
+      color: #ff6666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Raw Image - Case {{ patient_id }}</h1>
+  <img id="imageDisplay" src="{{ url_for('static', filename='original_image/raw_image.png') }}" alt="Medical Image with ROI"/>
+  <div class="metrics">
+    <div><label>Image Name :</label><span>{{ image_name }}</span></div>
+    <div><label>Body Part :</label><span>{{ breast.replace('_', ' ').title() }}</span></div>
+    <div><label>Modality :</label><span>{{ modality }}</span></div>
+  </div>
+
+  <button class="back-button" onclick="tryClose()">Close</button>
+  <script>
+    function tryClose() {
+        window.close()
+    }
+  </script>
+</body>
+</html>

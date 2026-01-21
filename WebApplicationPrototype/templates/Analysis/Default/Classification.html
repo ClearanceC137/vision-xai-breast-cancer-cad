@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAD Classification Results</title>
+  <link rel="stylesheet" href="../../static/css/style.css" />
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      color: red;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      display: flex;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .image-container {
+      position: relative;
+      flex: 1 1 400px;
+      max-width: 600px;
+      height: 400px;
+    }
+
+    #imageDisplay {
+      width: auto;
+      height: auto;
+      border: 1px solid red;
+      background-color: #2a2a2a;
+      box-shadow: 0 0 15px rgba(230, 57, 70, 0.6);
+      border-radius: 8px;
+  object-fit: contain;    /* Ensures proper scaling inside box */
+    }
+
+    /* ROI Highlight Box */
+    .roi-box {
+      position: absolute;
+      border: 3px solid #ff0000cc;
+      border-radius: 6px;
+      pointer-events: none;
+      /* example coords */
+      top: 20%;
+      left: 30%;
+      width: 40%;
+      height: 35%;
+      box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .results {
+      flex: 1 1 300px;
+      background-color: #2c2c2c;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px 1px #ff0000aa;
+      min-width: 280px;
+    }
+
+    .results h2 {
+      color: #ff4c4c;
+      margin-top: 0;
+    }
+
+    .metric {
+      margin-bottom: 1rem;
+    }
+
+    .metric label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      align-self: center;
+    }
+
+    .back-button:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <h1>Classification Results </h1>
+
+  <div class="container">
+    <div class="image-container">
+        <img id="imageDisplay" src="{{ url_for('static', filename='Images/' + image_filename) }}" alt="Medical Image with ROI" style="width: 90%;height:90%;"/>
+        
+    </div>
+
+    <div class="results">
+        <h2>Classification Details</h2>
+
+        <!-- Static summary fields (updated dynamically by JS if available) -->
+        <div class="metric">
+            <label>Accuracy:</label>
+            <span id="accuracyValue">95.7%</span>
+        </div>
+        <div class="metric">
+            <label>Confidence Score:</label>
+            <span id="confidenceValue">0.92</span>
+        </div>
+        <div class="metric">
+            <label>Diagnosis:</label>
+            <span id="diagnosisValue">Benign</span>
+        </div>
+        <!--
+        <div class="metric">
+            <label>Explainability Score:</label>
+            <span id="explainabilityValue">0.86 (ROI highlighted)</span>
+        </div> -->
+
+        <!-- Notes textarea 
+        <div class="metric">
+            <label for="radiologistNotes">Diagnosis Comments:</label>
+            <textarea
+              id="radiologistNotes"
+              rows="6"
+              placeholder="Enter your comments here..."
+              style="width: 100%; border-radius: 6px; border: 1px solid #ff4c4c; background-color: #2c2c2c; color: #fff; padding: 0.5rem; font-size: 1rem; resize: vertical;"
+            ></textarea>
+        </div>-->
+
+        <hr />
+    </div>
+  </div>
+
+  <button class="back-button" onclick="closeTab()">Close</button>
+
+  <script>
+    // Parse classificationData passed from backend as JSON
+    // (Jinja variable classificationData is a list of result objects)
+    const classificationData = {{ classificationData | tojson }};
+
+    // Defensive helper to set text if element exists
+    function setTextIfExists(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function updateUI() {
+      // Defensive: check if classificationData exists and has at least one result
+      if (!classificationData || classificationData.length === 0) {
+        console.warn("No classification data available");
+        return;
+      }
+
+      // Use first result to update main UI fields
+      const data = classificationData[0];
+
+      setTextIfExists("accuracyValue", data.accuracy + ' %');
+      setTextIfExists("confidenceValue", data.confidence + ' %');
+      setTextIfExists("diagnosisValue", data.diagnosis);
+
+
+      //console.log("Classification data:", data);
+
+
+    }
+
+    function closeTab() {
+      window.close();
+    }
+
+    window.onload = updateUI;
+  </script>
+</body>
+</html>

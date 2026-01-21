@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CAD System</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #000000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid red;
+        }
+        header h1 {
+            color: red;
+            margin: 0;
+        }
+        nav a {
+            color: red;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #000000;
+            color: #999;
+            border-top: 1px solid #333;
+        }
+
+        /* Your page-specific styles */
+        h1, h2 {
+          color: red;
+        }
+
+        .container {
+          background-color: #1e1e1e;
+          padding: 2rem;
+          border-radius: 8px;
+          border: 1px solid #333;
+          margin-top: 1rem;
+        }
+
+        .case-details {
+          margin-bottom: 2rem;
+          display: flex;
+          justify-content: space-between;
+          gap: 2rem;
+        }
+
+        .case-details .field-group {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .case-details label {
+          font-weight: bold;
+          margin-top: 1rem;
+        }
+
+        .readonly-field {
+          width: 100%;
+          color: #fff;
+          background-color: #2a2a2a;
+          border: none;
+          font-weight: bold;
+          padding: 0.3rem 0.5rem;
+          border-radius: 4px;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 2rem;
+        }
+
+        th, td {
+          padding: 1rem;
+          border: 1px solid #333;
+          text-align: left;
+        }
+
+        th {
+          background-color: #222;
+        }
+
+        .view-link {
+          color: red;
+          text-decoration: underline;
+          font-weight: bold;
+        }
+
+        form label {
+          margin-top: 1rem;
+          display: block;
+        }
+
+        input, select {
+          width: 100%;
+          padding: 0.5rem;
+          margin-top: 0.25rem;
+          background-color: #2a2a2a;
+          border: 1px solid #555;
+          border-radius: 4px;
+          color: #fff;
+        }
+
+        .upload-btn {
+          margin-top: 2rem;
+          background-color: red;
+          color: white;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          font-weight: bold;
+          border-radius: 6px;
+          font-size: 1rem;
+          cursor: pointer;
+        }
+
+        .upload-btn:hover {
+          background-color: darkred;
+        }
+        footer {
+            background-color: #1e1e1e;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Visual-Based Computer-Aided Breast Cancer Diagnosis</h1>
+        <nav>
+            <a href="../Home/Landing.html">Home</a>
+            <a href="../Case/AddCase.html">New Case</a>
+            <a href="../Case/History.html">History</a>
+            <a href="../Authentication/Login.html">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <!-- Case Info -->
+        <div class="case-details">
+          <div class="field-group">
+            <label>Case ID:</label>
+            <input class="readonly-field" value="C001" readonly />
+          </div>
+          <div class="field-group">
+            <label>Patient:</label>
+            <input class="readonly-field" value="Jane Doe" readonly />
+          </div>
+          <div class="field-group">
+            <label>Date:</label>
+            <input class="readonly-field" value="2025-04-01" readonly />
+          </div>
+        </div>
+
+        <!-- Existing Images Table -->
+        <h2>Images</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Image Name</th>
+              <th>Body Part</th>
+              <th>Modality</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>sample-mammo1.jpg</td>
+              <td>Left Breast</td>
+              <td>Mammogram</td>
+              <td><a class="view-link" href="../Analysis/ViewImage.html" target="_blank">View</a></td>
+            </tr>
+            <tr>
+              <td>sample-mammo2.jpg</td>
+              <td>Right Breast</td>
+              <td>MRI</td>
+              <td><a class="view-link" href="../Analysis/ViewImage.html"  target="_blank">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Upload Form -->
+        <h2>Image</h2>
+        <form action="#" method="post" enctype="multipart/form-data">
+          <!-- Image 1 -->
+          <label>Image File (1)</label>
+          <input type="file" name="image1" required />
+
+        <label for="body_part1">Body Part</label>
+        <select name="body_part1" id="body_part1" required>
+            <option value="">-- Select Body Part --</option>
+            <option value="left_breast">Left Breast</option>
+            <option value="right_breast">Right Breast</option>
+            <option value="abdomen">Abdomen</option>
+            <option value="chest">Chest</option>
+        </select>
+          <label>Modality</label>
+          <select name="modality1">
+            <option value="">-- Select Image Modality --</option>
+            <option value="Mammogram">Mammogram</option>
+            <option value="Ultrasound">Ultrasound</option>
+            <option value="MRI">MRI</option>
+          </select>
+
+          <button type="submit" class="upload-btn">Save Image</button>
+        </form>
+      </div>
+    </main>
+
+    <script>
+    const modalityOptions = {
+        left_breast: ['Mammogram', 'Ultrasound', 'MRI'],
+        right_breast: ['Mammogram', 'Ultrasound', 'MRI'],
+        abdomen: ['Ultrasound', 'MRI'],
+        chest: ['X-ray', 'CT scan', 'MRI']
+    };
+
+    const bodyPartSelect = document.getElementById('body_part1');
+    const modalitySelect = document.getElementById('modality1');
+
+    bodyPartSelect.addEventListener('change', () => {
+        const selectedBodyPart = bodyPartSelect.value;
+        modalitySelect.innerHTML = '<option value="">-- Select Modality --</option>';
+
+        if (selectedBodyPart && modalityOptions[selectedBodyPart]) {
+        modalityOptions[selectedBodyPart].forEach(modality => {
+            const option = document.createElement('option');
+            option.value = modality.toLowerCase().replace(/\s+/g, '_');
+            option.textContent = modality;
+            modalitySelect.appendChild(option);
+        });
+        }
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+    "dataset": {
+        "num_samples": 245,
+        "num_classes": 2,
+        "train_split": 220,
+        "test_split": 25,
+        "input_shape": [
+            64,
+            256,
+            256
+        ]
+    },
+    "model": {
+        "architecture": "CNNModel",
+        "conv_layers": [
+            [
+                32,
+                3
+            ],
+            [
+                64,
+                3
+            ]
+        ],
+        "hidden_units": [
+            256,
+            128
+        ],
+        "dropout_rate": 0.1
+    },
+    "training": {
+        "epochs": 60,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "device": "cpu",
+        "best_val_acc": 0.0
+    },
+    "evaluation": {
+        "test_accuracy": 0.76,
+        "confusion_matrix": [
+            [
+                10,
+                3
+            ],
+            [
+                3,
+                9
+            ]
+        ],
+        "classification_report": {
+            "0": {
+                "precision": 0.7692307692307693,
+                "recall": 0.7692307692307693,
+                "f1-score": 0.7692307692307693,
+                "support": 13
+            },
+            "1": {
+                "precision": 0.75,
+                "recall": 0.75,
+                "f1-score": 0.75,
+                "support": 12
+            },
+            "accuracy": 0.76,
+            "macro avg": {
+                "precision": 0.7596153846153846,
+                "recall": 0.7596153846153846,
+                "f1-score": 0.7596153846153846,
+                "support": 25
+            },
+            "weighted avg": {
+                "precision": 0.76,
+                "recall": 0.76,
+                "f1-score": 0.76,
+                "support": 25
+            }
+        }
+    },
+    "label_encoder": {
+        "BENIGN": 0,
+        "MALIGNANT": 1
+    },
+    "Training Time": "00:16:21"
+}

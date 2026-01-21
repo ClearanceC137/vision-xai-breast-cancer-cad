@@ -1,0 +1,16 @@
+[INIT] Model initialized with:
+       Input shape: (11, 11, 64)
+       Conv layers: [[128, 3], [64, 3]]
+       Hidden units: [256, 128]
+       Output classes: 2
+       LeakyReLU alpha: 0.01
+[INFO] Model loaded from C:\Users\clear\Desktop\BSC Computer Science hons\Hons Project 2025\D08\submission\WebApplicationPrototype\trained_model\cnn_model.npz
+[INIT] Model initialized with:
+       Input shape: (11, 11, 64)
+       Conv layers: [[128, 3], [64, 3]]
+       Hidden units: [256, 128]
+       Output classes: 2
+       LeakyReLU alpha: 0.01
+[INFO] Model loaded from C:\Users\clear\Desktop\BSC Computer Science hons\Hons Project 2025\D08\submission\WebApplicationPrototype\trained_model\cnn_model.npz
+ * Serving Flask app 'app'
+ * Debug mode: on

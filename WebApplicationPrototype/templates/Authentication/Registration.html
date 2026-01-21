@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register - CAD System</title>
+    <link rel="stylesheet" href="../../static/css/style.css" />
+    <style>
+        .register-container {
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .register-container h2 {
+            text-align: center;
+            color: red;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            background-color: red;
+            color: #fff;
+            border: none;
+            padding: 0.75rem;
+            width: 100%;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: red;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .register-here-btn {
+        display: block;
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        width: 100%;
+        font-weight: bold;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 1rem;
+        cursor: pointer;
+        }
+
+        .register-here-btn:hover {
+        background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>MammoCAD: Computer-Aided Breast Cancer Diagnosis</h1>
+    <nav>
+        <a href="../Home/Landing.html">Home</a>
+        <a href="Login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="#">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required />
+
+            <input type="submit" value="Register" />
+        </form>
+        <div class="login-link">
+            <p>Already have an account? <a href="Login.html">Login here</a></p>
+        </div>
+    </div>
+</main>
+<!--
+<footer>
+    <p>&copy; 2025 CAD Diagnostic System</p>
+</footer>
+-->
+</body>
+</html>

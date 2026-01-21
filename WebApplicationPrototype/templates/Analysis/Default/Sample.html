@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAD Results and ROI View</title>
+  <link rel="stylesheet" href="../../static/css/style.css" />
+  <style>
+    /* Reset some default margins and paddings */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #e63946; /* Softer red */
+      font-weight: 700;
+      text-align: center;
+      font-size: 2.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .image-row {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .image-box {
+      flex: 1 1 45%;
+      max-width: 600px;
+      border: 2px solid #e63946;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #2a2a2a;
+      box-shadow: 0 0 15px rgba(230, 57, 70, 0.6);
+      position: relative;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .roi-box {
+      position: absolute;
+      border: 3px solid #e63946cc;
+      border-radius: 8px;
+      pointer-events: none;
+      box-shadow: 0 0 15px 5px rgba(230, 57, 70, 0.5);
+      transition: all 0.3s ease;
+      background-color: rgba(230, 57, 70, 0.15);
+    }
+
+    .info-section {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .metrics, .results {
+      background-color: #2a2a2a;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(230, 57, 70, 0.7);
+      flex: 1 1 400px;
+      max-width: 500px;
+      color: #f1f1f1;
+    }
+
+    .metrics div, .metric {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      color: #ff7b7b;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.02em;
+    }
+
+    span {
+      font-size: 1rem;
+      color: #dcdcdc;
+    }
+
+    .results h2 {
+      color: #ff6f6f;
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: 8px;
+      border: 1.5px solid #e63946;
+      background-color: #2a2a2a;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #ff4c4c;
+      box-shadow: 0 0 8px #ff4c4c;
+    }
+
+    .back-button {
+      margin: 3rem auto 0;
+      background-color: #e63946;
+      color: #fff;
+      border: none;
+      padding: 0.85rem 2rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: inline-block;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.7);
+    }
+
+    .back-button:hover,
+    .back-button:focus {
+      background-color: #b02a32;
+      outline: none;
+      box-shadow: 0 6px 16px rgba(176, 42, 50, 0.9);
+    }
+
+    @media (max-width: 768px) {
+      .image-row {
+        flex-direction: column;
+      }
+
+      .image-box {
+        max-width: 100%;
+      }
+
+      .info-section {
+        flex-direction: column;
+      }
+
+      .metrics, .results {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Example Diagnosis: Raw Image and Classification Results</h1>
+
+  <div class="container">
+    <div class="image-row">
+      <!-- Raw Image -->
+      <div class="image-box" aria-label="Raw medical scan image">
+        <img src="../../../static/Images/BreastScan1.jpg" alt="Raw medical breast scan image" />
+      </div>
+
+      <!-- ROI Image -->
+      <div class="image-box roi-image-box" aria-label="Region of Interest on medical scan">
+        <img id="imageDisplay" src="../../../static/Images/BreastScan1.jpg" alt="Medical scan with highlighted region of interest" />
+        <div class="roi-box" id="roiBox" aria-hidden="true">Region of Interest</div>
+      </div>
+    </div>
+
+    <div class="info-section" role="region" aria-labelledby="infoHeading">
+      <!-- Image Metadata -->
+      <section class="metrics" aria-labelledby="metadataHeading">
+        <h2 id="metadataHeading" style="color:#ff6f6f; margin-top:0; margin-bottom:1rem;">Image Metadata</h2>
+        <div><label>Image Name:</label><span>sample-mammo1.jpg</span></div>
+        <div><label>Body Part:</label><span>Left Breast</span></div>
+        <div><label>Modality:</label><span>MRI</span></div>
+      </section>
+
+      <!-- Classification Results -->
+      <section class="results" aria-labelledby="classificationHeading">
+        <h2 id="classificationHeading">Classification Details</h2>
+        <div class="metric">
+          <label>Accuracy:</label>
+          <span id="accuracyValue">95.7%</span>
+        </div>
+        <div class="metric">
+          <label>Confidence Score:</label>
+          <span id="confidenceValue">0.92</span>
+        </div>
+        <div class="metric">
+          <label>Diagnosis:</label>
+          <span id="diagnosisValue">Benign</span>
+        </div>
+        <div class="metric">
+          <label>Explainability Score:</label>
+          <span id="explainabilityValue">0.86 (ROI highlighted)</span>
+        </div>
+        <div class="metric">
+          <label for="radiologistNotes">Diagnosis Comments:</label>
+          <textarea id="radiologistNotes" rows="6" placeholder="Enter your comments here..."></textarea>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <script>
+    const classificationData = {
+      accuracy: "95.7%",
+      confidence: 0.92,
+      diagnosis: "Benign",
+      roiCoords: { top: 0.20, left: 0.30, width: 0.40, height: 0.35 }
+    };
+
+    function updateUI() {
+      document.getElementById("accuracyValue").textContent = classificationData.accuracy;
+      document.getElementById("confidenceValue").textContent = classificationData.confidence;
+      document.getElementById("diagnosisValue").textContent = classificationData.diagnosis;
+
+      const roiBox = document.getElementById("roiBox");
+      roiBox.style.top = (classificationData.roiCoords.top * 100) + "%";
+      roiBox.style.left = (classificationData.roiCoords.left * 100) + "%";
+      roiBox.style.width = (classificationData.roiCoords.width * 100) + "%";
+      roiBox.style.height = (classificationData.roiCoords.height * 100) + "%";
+    }
+
+    window.onload = updateUI;
+
+  </script>
+</body>
+</html>
